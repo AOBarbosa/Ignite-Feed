@@ -1,9 +1,12 @@
 import { ThumbsUp, Trash } from "phosphor-react";
+import { useState } from "react";
 import { Avatar } from "./Avatar";
 
 import styles from "./Comment.module.css";
 
 export function Comment() {
+  const [count, setCount] = useState(0);
+
   return (
     <div className={styles.comment}>
       <Avatar hasBorder={false} src="http://github.com/AOBarbosa.png" />
@@ -30,9 +33,9 @@ export function Comment() {
         </div>
 
         <footer>
-          <button>
+          <button onClick={() => setCount(count + 1)}>
             <ThumbsUp size={20} />
-            Aplaudir <span>20</span>
+            Aplaudir <span>{count}</span>
           </button>
         </footer>
       </div>
