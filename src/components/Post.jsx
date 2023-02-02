@@ -7,14 +7,16 @@ import { Comment } from "./Comment";
 
 import styles from "./Post.module.css";
 
-const comments = [1, 2]; // temporario
-
 /**
  * Para nao ficar repetindo o nome props nas tags, podemos fazer a desetruturaçao
  * deixando apenas a propriedade que iremos usar => { author }
  * e ao inves de ficas props.author.name fica apenas author.name
  */
 export function Post({ author, publishedAt, content }) {
+  const [comments, setComments] = useState(["Post muito Bacana, hein?!"]);
+
+  const [newCommentText, setNewCommentText] = useState("");
+
   const publishedDateFormatted = format(
     publishedAt,
     "d 'de' LLLL 'as' HH':'mm'h'",
@@ -26,12 +28,15 @@ export function Post({ author, publishedAt, content }) {
     addSuffix: true,
   });
 
-  const [comments, setComments] = useState([1, 2]);
-
   function handleCreateNewComment() {
     event.preventDefault();
 
-    setComments([...comments, comments.lenght + 1]);
+    setComments([...comments, newCommentText]);
+    setNewCommentText("");
+  }
+
+  function handleNewCommentChange() {
+    setNewCommentText(event.target.value);
   }
 
   return (
@@ -70,7 +75,12 @@ export function Post({ author, publishedAt, content }) {
       <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
         <strong>Leave your feedback</strong>
 
-        <textarea placeholder="Leave a comment" />
+        <textarea
+          name="comment"
+          placeholder="Leave a comment"
+          value={newCommentText}
+          onChange={handleNewCommentChange}
+        />
 
         <footer>
           <button type="submit">Publish</button>
@@ -79,7 +89,7 @@ export function Post({ author, publishedAt, content }) {
 
       <div className={styles.commentList}>
         {comments.map((comment) => {
-          return <Comment />;
+          return <Comment content={comment} />;
         })}
       </div>
     </article>
