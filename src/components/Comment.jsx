@@ -5,10 +5,12 @@ import { Avatar } from "./Avatar";
 import styles from "./Comment.module.css";
 
 export function Comment({ content, onDeleteComment }) {
-  const [count, setCount] = useState(0);
+  const [applauseCount, setApplauseCount] = useState(0);
 
   function handleApplauseCount() {
-    setCount(count + 1);
+    setApplauseCount((state) => {
+      return state + 1;
+    });
   }
 
   function handleDeleteComment() {
@@ -43,7 +45,7 @@ export function Comment({ content, onDeleteComment }) {
         <footer>
           <button onClick={handleApplauseCount}>
             <ThumbsUp size={20} />
-            Aplaudir <span>{count}</span>
+            Aplaudir <span>{applauseCount}</span>
           </button>
         </footer>
       </div>
